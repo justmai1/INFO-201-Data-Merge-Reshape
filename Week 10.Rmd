@@ -7,6 +7,48 @@ output: html_document
 
 ```{r}
 getwd()
-setwd("/")
+library(tidyverse)
+library(readr)
+```
+```{r}
+oecd <- read.delim("oecd-gdp.csv.bz2")
+oecd %>% 
+  sample_n(5)
+
+
+
+# this is wide form because all columns contain conceptually similar values
+# long form is when it is for example a country by year
+```
+```{r}
+oecd_long <- oecd %>% 
+  pivot_longer(!c(country,indicator),
+               names_to = "year",
+               values_to = "gdp")
+sample_n(oecd_long,5)
+
+oecd_long$year <- gsub("X","",as.character(oecd_long$year)) # removes the X in the beginning of each year
+
+oecd_long %>% 
+  mutate(year = as.numeric(year))
+```
+```{r}
+p <- data.frame(pregnant = c("Yes", "No"),
+                male = c(NA,25),
+                female = c(11,18))
+
+pl <- p %>% 
+  pivot_longer(c(male,female),
+               names_to = "sex",
+               values_to = "count") # putting to long form
+
+pl
+```
+
+```{r}
+pl %>% 
+  pivot_wider(id_cols = pregnant,
+              names_from = sex,
+              values_from = count) # changing back to wide form
 ```
 
