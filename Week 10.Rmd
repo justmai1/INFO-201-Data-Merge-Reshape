@@ -1,0 +1,12 @@
+---
+title: "Week 10 Data Shaping, Merging"
+author: "Justin Mai"
+date: "2023-11-28"
+output: html_document
+---
+
+```{r}
+getwd()
+setwd("/")
+```
+
